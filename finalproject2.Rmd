@@ -2,7 +2,7 @@
 title: "Final project"
 author: "Luis Galvis"
 date: "Sunday, September 21, 2014"
-output: pdf_document
+output: html_document
 ---
 
 ### Executive summary
@@ -36,7 +36,7 @@ corbestind<-findCorrelation(corrbest, 0.68);
 
 bestfeatnames <- names(cor1)[corbestind]; 
 besttrainData <- mytrainData[,bestfeatnames]
-# besttrainData is the data frame with the best 25 features (above 0.68)
+# besttrainData is the subsetted data frame with the best 25 features (above 0.68)
 
 # Now we add the classe variable back
 besttrainData$classe <- mytrainData$classe
@@ -44,6 +44,7 @@ besttrain2 <- besttrainData[complete.cases(besttrainData),]
 # Comparing besttrain2 and besttrainData they have the same number of rows, meaning matrix is complete, which is good.
 
 cvdata <- mytestData[,bestfeatnames]
+#cvdata is the cross validation data, subsetted data frame with the best 25 features (above 0.68) as the best training data.
 
 unique(mytrainData$classe)
 # Number of possible results is 5
