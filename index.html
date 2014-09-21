@@ -86,7 +86,7 @@ corbestind&lt;-findCorrelation(corrbest, 0.68);
 
 bestfeatnames &lt;- names(cor1)[corbestind]; 
 besttrainData &lt;- mytrainData[,bestfeatnames]
-# besttrainData is the data frame with the best 25 features (above 0.68)
+# besttrainData is the subsetted data frame with the best 25 features (above 0.68)
 
 # Now we add the classe variable back
 besttrainData$classe &lt;- mytrainData$classe
@@ -94,6 +94,7 @@ besttrain2 &lt;- besttrainData[complete.cases(besttrainData),]
 # Comparing besttrain2 and besttrainData they have the same number of rows, meaning matrix is complete, which is good.
 
 cvdata &lt;- mytestData[,bestfeatnames]
+#cvdata is the cross validation data, subsetted data frame with the best 25 features (above 0.68) as the best training data.
 
 unique(mytrainData$classe)</code></pre>
 <pre><code>## [1] A B C D E
@@ -118,33 +119,33 @@ confusionMatrix(trainpredict, testing$classe)</code></pre>
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 1672    0    0    0    0
-##          B    2 1139    3    0    0
-##          C    0    0 1019    1    0
-##          D    0    0    4  962    1
-##          E    0    0    0    1 1081
+##          A 1674    8    0    1    0
+##          B    0 1130    1    0    0
+##          C    0    1 1020    1    0
+##          D    0    0    5  962    0
+##          E    0    0    0    0 1082
 ## 
 ## Overall Statistics
 ##                                         
-##                Accuracy : 0.998         
-##                  95% CI : (0.996, 0.999)
+##                Accuracy : 0.997         
+##                  95% CI : (0.995, 0.998)
 ##     No Information Rate : 0.284         
 ##     P-Value [Acc &gt; NIR] : &lt;2e-16        
 ##                                         
-##                   Kappa : 0.997         
+##                   Kappa : 0.996         
 ##  Mcnemar's Test P-Value : NA            
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity             0.999    1.000    0.993    0.998    0.999
-## Specificity             1.000    0.999    1.000    0.999    1.000
-## Pos Pred Value          1.000    0.996    0.999    0.995    0.999
-## Neg Pred Value          1.000    1.000    0.999    1.000    1.000
+## Sensitivity             1.000    0.992    0.994    0.998    1.000
+## Specificity             0.998    1.000    1.000    0.999    1.000
+## Pos Pred Value          0.995    0.999    0.998    0.995    1.000
+## Neg Pred Value          1.000    0.998    0.999    1.000    1.000
 ## Prevalence              0.284    0.194    0.174    0.164    0.184
-## Detection Rate          0.284    0.194    0.173    0.163    0.184
-## Detection Prevalence    0.284    0.194    0.173    0.164    0.184
-## Balanced Accuracy       0.999    0.999    0.996    0.998    0.999</code></pre>
+## Detection Rate          0.284    0.192    0.173    0.163    0.184
+## Detection Prevalence    0.286    0.192    0.174    0.164    0.184
+## Balanced Accuracy       0.999    0.996    0.997    0.998    1.000</code></pre>
 <p>So we got more than 99.7% accuracy on the cross validation set as expected, and very good specificity and sensitivity of our model as well. So our model is actually very good, and allows us to predict on the new testing set with confidence. Now we will use the model to get the predictions for the supplied testing set.</p>
 <pre class="r"><code>answers &lt;- predict(model, cvdata); 
 #confusionMatrix(answers, cvdata$classe)</code></pre>
